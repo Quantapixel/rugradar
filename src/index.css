@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #05070c;
+  --color-panel: #0a0e16;
+  --color-panel-2: #101724;
+  --color-edge: #1a2331;
+  --color-edge-2: #263349;
+  --color-muted: #8392ab;
+  --color-chalk: #eef3fd;
+  --color-radar: #ffb020;
+  --color-danger: #ff4d5e;
+  --color-safe: #34d9a5;
+  --color-info: #63a4ff;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-chalk);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(255, 176, 32, 0.32);
+}
+
+textarea,
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Layered surface: soft gradient wash, hairline border, inner top highlight. */
+.surface {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.012)),
+    rgba(10, 14, 22, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 28px 56px -40px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(16px);
+}
+
+.surface-inset {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(5, 7, 12, 0.6);
+}
+
+.surface-hover {
+  transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+.surface-hover:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  width: 46rem;
+  height: 46rem;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.34;
+}
+
+.aurora::before {
+  top: -22rem;
+  left: -14rem;
+  background: radial-gradient(circle, rgba(255, 176, 32, 0.34), transparent 68%);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+
+.aurora::after {
+  top: -26rem;
+  right: -16rem;
+  background: radial-gradient(circle, rgba(99, 164, 255, 0.3), transparent 68%);
+  animation: drift 32s ease-in-out infinite alternate-reverse;
+}
+
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 78%);
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3rem, 2rem, 0) scale(1.12);
+  }
+}
+
+@keyframes radarSweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.radar-sweep {
+  transform-origin: center;
+  animation: radarSweep 3.4s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(255, 176, 32, 0.65);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: riseIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pulseRing {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulseRing 1.6s ease-out infinite;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27334a transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #27334a;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
